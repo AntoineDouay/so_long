@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:42:01 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/24 19:13:08 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/25 15:35:19 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ typedef	struct	s_map{
 	char	**map;
 	int		line_len;
 	int		line_nbr;
+	int		player_i;
+	int		player_j;
+	int		open_exit;
 }	t_map;
 
 typedef	struct	s_data{
@@ -50,9 +53,21 @@ typedef	struct	s_data{
 	t_img	background;
 	t_img	wall;
 	t_img	coin;
+	t_img	trap;
 	t_map	map;
 }	t_data;
 
 int	check_map(t_data *data, char **argv);
+int check_coin(t_data *data);
+
+int 	coe(t_data *data, char c);
+void	get_player_pos(t_data *data);
+int		check_coin(t_data *data);
+
+void    player_move_up(t_data *data);
+void    player_move_down(t_data *data);
+void    player_move_left(t_data *data);
+void    player_move_right(t_data *data);
+
 
 #endif

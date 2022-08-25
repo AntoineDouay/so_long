@@ -6,18 +6,43 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:13:55 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/24 21:01:41 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/25 15:15:50 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	check_coin(t_data *data)
+{
+	int	i;
+	int	j;
+	int coin;
+
+	i = 0;
+	coin = 0;
+	while (data->map.map[i] != 0)
+	{
+		j = 0;
+		while(data->map.map[i][j] != '\0')
+		{
+			if (data->map.map[i][j] == 'C')
+				coin++;
+			j++;
+		}
+		i++;
+	}
+	if (!coin)
+		return (1);
+	return (0);
+}
 
 int	map_ber(char *file)
 {
 	int n;
 
 	n = ft_strlen(file);
-
+	if (n < 5)
+		return (1);
 	if (ft_strncmp(".ber", file + (n-4), 4) == 0)
 		return (0);
 	return (1);
@@ -155,10 +180,10 @@ int	check_carac(char **map)
 
 int	check_map(t_data *data, char **argv)
 {
+	parse_map(data, argv[1]);
 //	if (map_file_exist())
 	if (map_ber(argv[1]))
 		return (printf("error ber"));
-	parse_map(data, argv[1]);
 	if (rectangular_map(data->map.map, data->map.line_len, data))
 		return (printf("error rect"));
 	if (valid_carac_map(data->map.map))

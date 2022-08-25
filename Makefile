@@ -6,7 +6,7 @@
 #    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 13:33:43 by adouay            #+#    #+#              #
-#    Updated: 2022/08/23 18:06:48 by adouay           ###   ########.fr        #
+#    Updated: 2022/08/25 13:40:12 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CC = gcc
 
 SRC = main.c \
 		map.c \
+		move.c \
 		get_next_line_bonus.c \
 		get_next_line_utils_bonus.c
 
