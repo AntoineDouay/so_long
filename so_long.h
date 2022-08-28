@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:42:01 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/25 15:35:19 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/28 19:14:11 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,17 @@ typedef	struct	s_map{
 	int		line_nbr;
 	int		player_i;
 	int		player_j;
+	int		exit_pos_i;
+	int		exit_pos_j;
 	int		open_exit;
+	int		wall_render;
+	int		file_exist;
 }	t_map;
 
 typedef	struct	s_data{
 	void	*mlx_ptr;
 	void	*win_ptr;
+	int		step;
 	t_img	isaac;
 	t_img	background;
 	t_img	wall;
@@ -68,6 +73,6 @@ void    player_move_up(t_data *data);
 void    player_move_down(t_data *data);
 void    player_move_left(t_data *data);
 void    player_move_right(t_data *data);
-
+void	render_wall(t_data *data);
 
 #endif

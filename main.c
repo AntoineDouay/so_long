@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:34:10 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/25 16:10:47 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/28 19:15:43 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,40 @@ int	no_leak_exit(t_data *data)
 	exit(0);
 }
 
+void	render_wall(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (data->map.map[i] != 0)
+	{
+		j = 0;
+		while (data->map.map[i][j] != '\0')
+		{	
+			if (data->map.map[i][j] == '1')
+				 mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->wall.img, j*70, i*70);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	render_step(t_data *data)
+{	
+
+	char *step;
+
+	step = ft_itoa(data->step);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 30, 35, 0xFFFFFF, "score :");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 35, 0xFFFFFF, step);
+	free(step);
+}
+
 void	render_map(t_data *data)
 {
-	int i;
-	int j;
+	int 	i;
+	int 	j;
 
 	i = 0;
 	while (data->map.map[i] != 0)
@@ -52,8 +82,6 @@ void	render_map(t_data *data)
 		j = 0;
 		while (data->map.map[i][j] != '\0')
 		{
-			if (data->map.map[i][j] == '1')
-				 mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->wall.img, j*70, i*70);
 			if (data->map.map[i][j] == '0')
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background.img, j*70, i*70);
 			if (data->map.map[i][j] == 'P')
@@ -68,13 +96,20 @@ void	render_map(t_data *data)
 		}
 		i++;
 	}
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 30, 50, 0xFFFFFF, "score :");
+	render_step(data);
 }
 
 int	render(t_data *data)
 {
 	if (data->win_ptr != NULL)
+	{
+		if (data->map.wall_render == 0)
+		{
+			data->map.wall_render = 1;
+			render_wall(data);
+		}
 		render_map(data);
+	}
 	return(0);
 }
 
@@ -121,14 +156,22 @@ int	handle_key_input(int key, t_data *data)
 	if (key == 100)
 		player_move_right(data);
 	printf("%i\n", key);
+	int i = 0;
+
+	while (data->map.map[i] != 0)
+	{
+		printf("%s\n", data->map.map[i]);
+		i++;
+	}
+
 	return (0);
 }
 
 // player mouvement                                               y
 // collect item disepear                                          y
 // no exit util no coin                                           y
-// counter of moove                          
-// close page when click on cross                        
+// counter of moove                          				      y
+// close page when click on cross                        		  y
 // 
 //
 
@@ -137,14 +180,17 @@ int	main(int argc, char **argv)
 	t_data	data;
 	
 	if(check_map(&data, argv))
-	{	
-		free_double_array(data.map.map);
+	{
+		if (data.map.file_exist == 1)                                          //map exist;
+			free_double_array(data.map.map);
 		return (write(1, "Error\n", 6));
 	}
 
 	data.mlx_ptr = mlx_init();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.line_len*70, (data.map.line_nbr+1)*70, "force");
 	data.map.open_exit = 0;
+	data.step = 0;
+	data.map.wall_render = 0;
 	data.isaac.img = mlx_xpm_file_to_image(data.mlx_ptr, "isaac.xpm", &data.isaac.width, &data.isaac.height);
 	data.background.img = mlx_xpm_file_to_image(data.mlx_ptr, "background.xpm", &data.background.width, &data.background.height);
 	data.wall.img = mlx_xpm_file_to_image(data.mlx_ptr, "wall.xpm", &data.wall.width, &data.wall.height);
@@ -153,8 +199,8 @@ int	main(int argc, char **argv)
 
 	mlx_hook(data.win_ptr, 02, 1L<<0,&handle_key_input, &data);
 	mlx_hook(data.win_ptr, 17, 0L, &no_leak_exit, &data);
-	mlx_loop_hook(data.mlx_ptr, &render, &data);
-
+	mlx_loop_hook(data.mlx_ptr, &render, &data);  //??
+	
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
