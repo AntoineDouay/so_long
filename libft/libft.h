@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:37:37 by adouay            #+#    #+#             */
-/*   Updated: 2022/05/09 16:11:52 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/29 06:46:23 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <fcntl.h>
 # include <stddef.h>
 # include <string.h>
+# include "gnl/get_next_line_bonus.h"
+# include "ft_printf/ft_printf.h"
 
 typedef struct s_list
 {

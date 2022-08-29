@@ -6,12 +6,13 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 17:42:29 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/23 17:42:33 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/29 06:53:23 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+/*
 size_t	ft_strlen(const char *s)
 {
 	size_t	n;
@@ -23,7 +24,7 @@ size_t	ft_strlen(const char *s)
 		n++;
 	return (n);
 }
-
+*/
 char	*ft_strjoin_pimped(char *s1, char *s2)
 {
 	int		i;

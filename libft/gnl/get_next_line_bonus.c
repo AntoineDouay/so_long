@@ -6,12 +6,11 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 17:39:03 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/23 18:07:09 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/29 06:25:22 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include "so_long.h"
 
 char	*ft_clean_container(char *container)
 {
@@ -96,7 +95,6 @@ char	*get_next_line(int fd)
 {
 	static char	*container[1024];
 	char		*line;
-	int			limiter_len;
 
 	if (fd < 0 || 10 <= 0)
 		return (0);

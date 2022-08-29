@@ -6,139 +6,49 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:34:10 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/28 19:15:43 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/29 05:58:34 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_double_array(char **tab)
+void	set_var(t_data *data)
 {
-	int	i;
+	data->map.open_exit = 0;
+	data->step = 0;
+	data->map.wall_render = 0;
+	data->isaac_f.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/isaac_f.xpm", &data->isaac_f.width, &data->isaac_f.height);
+	data->isaac_b.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/isaac_b.xpm", &data->isaac_b.width, &data->isaac_b.height);
+	data->isaac_l.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/isaac_l.xpm", &data->isaac_l.width, &data->isaac_l.height);
+	data->isaac_r.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/isaac_r.xpm", &data->isaac_r.width, &data->isaac_r.height);
+	data->enemies.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/enemies.xpm", &data->enemies.width, &data->enemies.height);
+	data->bg.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/background.xpm", &data->bg.width, &data->bg.height);
+	data->wall.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/wall.xpm", &data->wall.width, &data->wall.height);
+	data->coin.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/coin.xpm", &data->coin.width, &data->coin.height);
+	data->trap.img = mlx_xpm_file_to_image(data->mlx_ptr,
+			"sprite/trap.xpm", &data->trap.width, &data->trap.height);
+	set_isaac_sprite(data);
+	data->isaac_down = 1;
+}
 
-	i = 0;
-	while(tab[i] !=  0)
+void	coe(t_data *data, char c)
+{
+	if (c == 'M')
 	{
-		free(tab[i]);
-		i++;
+		printf("GAME OVER\n");
+		no_leak_exit(data);
 	}
-	free(tab[i]);
-	free(tab);
-}
-
-int	no_leak_exit(t_data *data)
-{
-	mlx_destroy_image(data->mlx_ptr, data->isaac.img);
-	mlx_destroy_image(data->mlx_ptr, data->wall.img);
-	mlx_destroy_image(data->mlx_ptr, data->trap.img);
-	mlx_destroy_image(data->mlx_ptr, data->coin.img);
-	mlx_destroy_image(data->mlx_ptr, data->background.img);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	data->win_ptr = NULL;
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
-	free_double_array(data->map.map);
-	exit(0);
-}
-
-void	render_wall(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (data->map.map[i] != 0)
-	{
-		j = 0;
-		while (data->map.map[i][j] != '\0')
-		{	
-			if (data->map.map[i][j] == '1')
-				 mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->wall.img, j*70, i*70);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	render_step(t_data *data)
-{	
-
-	char *step;
-
-	step = ft_itoa(data->step);
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 30, 35, 0xFFFFFF, "score :");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 35, 0xFFFFFF, step);
-	free(step);
-}
-
-void	render_map(t_data *data)
-{
-	int 	i;
-	int 	j;
-
-	i = 0;
-	while (data->map.map[i] != 0)
-	{	
-		j = 0;
-		while (data->map.map[i][j] != '\0')
-		{
-			if (data->map.map[i][j] == '0')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background.img, j*70, i*70);
-			if (data->map.map[i][j] == 'P')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->isaac.img, j*70, i*70);
-			if (data->map.map[i][j] == 'C')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->coin.img, j*70, i*70);
-			if (data->map.map[i][j] == 'E' && data->map.open_exit == 1)
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->trap.img, j*70, i*70);
-			if (data->map.map[i][j] == 'E' && data->map.open_exit == 0)
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background.img, j*70, i*70);
-			j++;
-		}
-		i++;
-	}
-	render_step(data);
-}
-
-int	render(t_data *data)
-{
-	if (data->win_ptr != NULL)
-	{
-		if (data->map.wall_render == 0)
-		{
-			data->map.wall_render = 1;
-			render_wall(data);
-		}
-		render_map(data);
-	}
-	return(0);
-}
-
-void	get_player_pos(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (data->map.map[i] != 0)
-	{
-		j = 0;
-		while(data->map.map[i][j] != '\0')
-		{
-			if (data->map.map[i][j] == 'P')
-			{
-				data->map.player_i = i;
-				data->map.player_j = j;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-int	coe(t_data *data, char c)
-{
 	if (c == 'E' && data->map.open_exit == 1)
 	{
+		printf("gg\n");
 		no_leak_exit(data);
 	}
 }
@@ -155,52 +65,28 @@ int	handle_key_input(int key, t_data *data)
 		player_move_down(data);
 	if (key == 100)
 		player_move_right(data);
-	printf("%i\n", key);
-	int i = 0;
-
-	while (data->map.map[i] != 0)
-	{
-		printf("%s\n", data->map.map[i]);
-		i++;
-	}
-
 	return (0);
 }
-
-// player mouvement                                               y
-// collect item disepear                                          y
-// no exit util no coin                                           y
-// counter of moove                          				      y
-// close page when click on cross                        		  y
-// 
-//
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	
-	if(check_map(&data, argv))
+
+	if (argc != 2)
+		return (write(1, "Error\n", 6));
+	if (check_map(&data, argv))
 	{
-		if (data.map.file_exist == 1)                                          //map exist;
+		if (data.map.file_exist == 1)
 			free_double_array(data.map.map);
 		return (write(1, "Error\n", 6));
 	}
-
 	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.line_len*70, (data.map.line_nbr+1)*70, "force");
-	data.map.open_exit = 0;
-	data.step = 0;
-	data.map.wall_render = 0;
-	data.isaac.img = mlx_xpm_file_to_image(data.mlx_ptr, "isaac.xpm", &data.isaac.width, &data.isaac.height);
-	data.background.img = mlx_xpm_file_to_image(data.mlx_ptr, "background.xpm", &data.background.width, &data.background.height);
-	data.wall.img = mlx_xpm_file_to_image(data.mlx_ptr, "wall.xpm", &data.wall.width, &data.wall.height);
-	data.coin.img = mlx_xpm_file_to_image(data.mlx_ptr, "coin.xpm", &data.coin.width, &data.coin.height);
-	data.trap.img = mlx_xpm_file_to_image(data.mlx_ptr, "trap.xpm", &data.trap.width, &data.trap.height);
-
-	mlx_hook(data.win_ptr, 02, 1L<<0,&handle_key_input, &data);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.line_len * 50,
+			(data.map.line_nbr + 1) * 50, "force");
+	set_var(&data);
+	render(&data);
+	mlx_hook(data.win_ptr, 02, 1L << 0, &handle_key_input, &data);
 	mlx_hook(data.win_ptr, 17, 0L, &no_leak_exit, &data);
-	mlx_loop_hook(data.mlx_ptr, &render, &data);  //??
-	
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

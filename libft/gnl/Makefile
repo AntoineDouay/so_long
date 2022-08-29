@@ -3,39 +3,39 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: adouay <adouay@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/23 13:33:43 by adouay            #+#    #+#              #
-#    Updated: 2022/08/29 06:52:17 by adouay           ###   ########.fr        #
+#    Created: 2022/08/29 06:22:22 by adouay            #+#    #+#              #
+#    Updated: 2022/08/29 06:24:49 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = so_long
+NAME = gnl.a
 
-CC = gcc -Wall -Werror -Wextra
+CC = gcc -Wall -Wextra -Werror
 
-SRC = main.c \
-		map.c \
-		map2.c \
-		render.c \
-		move.c \
-		free.c \
+SRC = get_next_line_bonus.c \
+	get_next_line_utils_bonus.c
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all : $(NAME)
 
-$(NAME): $(OBJ)
-	@$(MAKE) -C libft
-	$(CC) $(OBJ) -g -L libft/. -lft -I libft/. -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+$(NAME) : $(OBJ)
+	ar rc $(NAME) $^
 
-%.o: %.c
-	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+%.o : %.c
+	$(CC) -c $^
 
-clean:
-	rm -f $(OBJ)
+bonus : $(OBJ) $(BONUS_OBJ)
+	ar rc $(NAME) $^
 
-fclean: clean
+clean :
+	rm -f $(OBJ) $(BONUS_OBJ)
+
+fclean : clean
 	rm -f $(NAME)
 
-re: fclean all
+re : fclean all
+
+.PHONY : all bonus clean fclean re

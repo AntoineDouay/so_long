@@ -5,32 +5,28 @@
 #                                                     +:+ +:+         +:+      #
 #    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/23 13:33:43 by adouay            #+#    #+#              #
-#    Updated: 2022/08/29 06:52:17 by adouay           ###   ########.fr        #
+#    Created: 2022/05/17 17:52:46 by adouay            #+#    #+#              #
+#    Updated: 2022/08/29 06:27:16 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = so_long
+NAME = ft_printf.a
 
 CC = gcc -Wall -Werror -Wextra
 
-SRC = main.c \
-		map.c \
-		map2.c \
-		render.c \
-		move.c \
-		free.c \
+SRC = ft_printf.c \
+	ft_hexa.c \
+	ft_int.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(MAKE) -C libft
-	$(CC) $(OBJ) -g -L libft/. -lft -I libft/. -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	ar rc $(NAME) $^ 
 
 %.o: %.c
-	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CC) -c $^
 
 clean:
 	rm -f $(OBJ)

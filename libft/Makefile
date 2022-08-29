@@ -6,11 +6,17 @@
 #    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 20:53:27 by adouay            #+#    #+#              #
-#    Updated: 2022/05/09 16:22:09 by adouay           ###   ########.fr        #
+#    Updated: 2022/08/29 06:51:32 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+
+LIBFT_B = libft_base.a
+
+GNL = gnl/gnl.a
+
+FT_PRINTF = ft_printf/ft_printf.a
 
 CC = gcc -Wall -Wextra -Werror
 
@@ -64,7 +70,10 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	ar rc $(NAME) $^
+	@$(MAKE) -C ft_printf
+	@$(MAKE) -C gnl
+	ar rc $(LIBFT_B) $^
+	ar rcT $(NAME) $(LIBFT_B) $(GNL) $(FT_PRINTF)
 
 %.o : %.c
 	$(CC) -c $^
@@ -73,9 +82,12 @@ bonus : $(OBJ) $(BONUS_OBJ)
 	ar rc $(NAME) $^
 
 clean :
+	@$(MAKE) fclean -C ft_printf
+	@$(MAKE) fclean -C gnl
 	rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean : clean
+	rm -f $(LIBFT_B)
 	rm -f $(NAME)
 
 re : fclean all
