@@ -6,7 +6,7 @@
 #    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 13:33:43 by adouay            #+#    #+#              #
-#    Updated: 2022/08/29 06:52:17 by adouay           ###   ########.fr        #
+#    Updated: 2022/08/30 13:32:16 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(MAKE) -C libft
+	$(MAKE) -C libft
+	$(MAKE) -C mlx_linux
 	$(CC) $(OBJ) -g -L libft/. -lft -I libft/. -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 %.o: %.c
@@ -34,7 +35,8 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
-
+	$(MAKE) clean -C mlx_linux
+	$(MAKE) fclean -C libft
 fclean: clean
 	rm -f $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:34:10 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/29 05:58:34 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/30 14:12:02 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,15 @@ void	set_var(t_data *data)
 	data->map.open_exit = 0;
 	data->step = 0;
 	data->map.wall_render = 0;
-	data->isaac_f.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/isaac_f.xpm", &data->isaac_f.width, &data->isaac_f.height);
-	data->isaac_b.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/isaac_b.xpm", &data->isaac_b.width, &data->isaac_b.height);
-	data->isaac_l.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/isaac_l.xpm", &data->isaac_l.width, &data->isaac_l.height);
-	data->isaac_r.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/isaac_r.xpm", &data->isaac_r.width, &data->isaac_r.height);
-	data->enemies.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/enemies.xpm", &data->enemies.width, &data->enemies.height);
-	data->bg.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/background.xpm", &data->bg.width, &data->bg.height);
-	data->wall.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/wall.xpm", &data->wall.width, &data->wall.height);
-	data->coin.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/coin.xpm", &data->coin.width, &data->coin.height);
-	data->trap.img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"sprite/trap.xpm", &data->trap.width, &data->trap.height);
+	set_img_np(data, &data->isaac_f, "sprite/isaac_f.xpm");
+	set_img_np(data, &data->isaac_b, "sprite/isaac_b.xpm");
+	set_img_np(data, &data->isaac_l, "sprite/isaac_l.xpm");
+	set_img_np(data, &data->isaac_r, "sprite/isaac_r.xpm");
+	set_img_np(data, &data->enemies, "sprite/enemies.xpm");
+	set_img_np(data, &data->bg, "sprite/background.xpm");
+	set_img_np(data, &data->wall, "sprite/wall.xpm");
+	set_img_np(data, &data->coin, "sprite/coin.xpm");
+	set_img_np(data, &data->trap, "sprite/trap.xpm");
 	set_isaac_sprite(data);
 	data->isaac_down = 1;
 }
@@ -43,12 +34,12 @@ void	coe(t_data *data, char c)
 {
 	if (c == 'M')
 	{
-		printf("GAME OVER\n");
+		ft_printf("GAME OVER\n");
 		no_leak_exit(data);
 	}
 	if (c == 'E' && data->map.open_exit == 1)
 	{
-		printf("gg\n");
+		ft_printf("gg\n");
 		no_leak_exit(data);
 	}
 }
@@ -78,11 +69,15 @@ int	main(int argc, char **argv)
 	{
 		if (data.map.file_exist == 1)
 			free_double_array(data.map.map);
-		return (write(1, "Error\n", 6));
+		return (0);
 	}
 	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		no_leak_exit(&data);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.line_len * 50,
-			(data.map.line_nbr + 1) * 50, "force");
+			(data.map.line_nbr + 1) * 50, "so_long");
+	if (!data.win_ptr)
+		no_leak_exit(&data);
 	set_var(&data);
 	render(&data);
 	mlx_hook(data.win_ptr, 02, 1L << 0, &handle_key_input, &data);

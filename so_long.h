@@ -6,12 +6,12 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:42:01 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/29 06:42:10 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/30 12:58:38 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
-#define SO_LONG_H
+# define SO_LONG_H
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -19,24 +19,13 @@
 # include <unistd.h>
 # include "libft/libft.h"
 
-/*
-typedef	enum	s_carac{
-	VOID = 48;
-	WALL = 49;
-	PLAYER = 80;
-	COLLECTIBLE = 67;
-	EXIT = 69;
-
-}	t_carac
-*/
-typedef	struct	s_img{
+typedef struct s_img{
 	void	*img;
-//	char	*path;
 	int		width;
 	int		height;
 }	t_img;
 
-typedef	struct	s_map{
+typedef struct s_map{
 	char	**map;
 	int		line_len;
 	int		line_nbr;
@@ -49,7 +38,7 @@ typedef	struct	s_map{
 	int		file_exist;
 }	t_map;
 
-typedef	struct	s_data{
+typedef struct s_data{
 	void	*mlx_ptr;
 	void	*win_ptr;
 	int		step;
@@ -68,39 +57,43 @@ typedef	struct	s_data{
 	t_img	trap;
 	t_map	map;
 }	t_data;
+/* -----main.c----- */
+void	set_var(t_data *data);
+void	coe(t_data *data, char c);
+int		handle_key_input(int key, t_data *data);
 
-int	check_map(t_data *data, char **argv);
-int check_coin(t_data *data);
-
-void 	coe(t_data *data, char c);
-void	get_player_pos(t_data *data);
-
+/* -----map.c ----- */
+int		check_map(t_data *data, char **argv);
 int		check_coin(t_data *data);
+int		parse_map(t_data *data, char *file);
+int		rectangular_map(char **map, int line_len, t_data *data);
+int		surrounded_by_wall(char **map, int line_len, int line_nbr);
+
 /* -----map2.c----- */
-void    get_player_pos(t_data *data);
-int 	map_ber(char *file);
-int 	valid_carac_map(t_data *data, char **map);
-int 	valid(int p, int c, int e);
-int 	check_carac(char **map);
+void	get_player_pos(t_data *data);
+int		map_ber(char *file);
+int		valid_carac_map(t_data *data, char **map);
+int		valid(int p, int c, int e);
+int		check_carac(char **map);
 
 /* -----render.c----- */
-
-void    render_wall(t_data *data, char c, int i, int j);
-void    render_step(t_data *data);
-void    render_isaac(t_data *data, char c, int i, int j);
-void    render_map(t_data *data, char c, int i, int j);
+void	render_wall(t_data *data, char c, int i, int j);
+void	render_step(t_data *data);
+void	render_isaac(t_data *data, char c, int i, int j);
+void	render_map(t_data *data, char c, int i, int j);
 int		render(t_data *data);
 
 /* -----move.c----- */
-
-void    set_isaac_sprite(t_data *data);
-void    player_move_up(t_data *data);
-void    player_move_down(t_data *data);
-void    player_move_left(t_data *data);
-void    player_move_right(t_data *data);
+void	set_isaac_sprite(t_data *data);
+void	player_move_up(t_data *data);
+void	player_move_down(t_data *data);
+void	player_move_left(t_data *data);
+void	player_move_right(t_data *data);
 
 /* -----free.c----- */
 void	free_double_array(char **tab);
-int	no_leak_exit(t_data *data);
+int		no_leak_exit(t_data *data);
+void	set_img_np(t_data *data, t_img *img, char *file);
+void	destroy_image(t_data *data, t_img *img);
 
 #endif

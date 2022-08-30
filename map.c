@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:13:55 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/29 05:18:32 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/30 14:21:18 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	parse_map(t_data *data, char *file)
 	}
 	data->map.map = ft_split(map_1d, '\n');
 	free(map_1d);
+	if (!data->map.map)
+		exit(0);
 	data->map.line_len = ft_strlen(data->map.map[0]);
 	close(fd);
 	return (0);
@@ -112,15 +114,18 @@ int	check_map(t_data *data, char **argv)
 	if (parse_map(data, argv[1]))
 		return (1);
 	if (map_ber(argv[1]))
-		return (1);
+		return (ft_printf("Error\nNeed extension .ber for map\n"));
 	if (rectangular_map(data->map.map, data->map.line_len, data))
-		return (1);
+		return (ft_printf("Error\nNeed same line length for map\n"));
 	if (valid_carac_map(data, data->map.map))
-		return (1);
+		return (ft_printf("Error\nIllegal carac in map\n"));
 	if (surrounded_by_wall(data->map.map,
 			data->map.line_len, data->map.line_nbr))
-		return (1);
+		return (ft_printf("Error\nNeed map surrounded by wall\n"));
 	if (check_carac(data->map.map))
-		return (1);
+	{
+		return (ft_printf
+			("Error\nNeed only one player/exit and at least one coin\n"));
+	}
 	return (0);
 }
