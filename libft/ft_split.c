@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:26:27 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/11 16:20:15 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/30 18:14:37 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char	**ft_split(char const *s, char c)
 	int		w_nbr;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	w_nbr = ft_w_nbr(s, c);
 	p = malloc(sizeof(char *) * (w_nbr + 1));

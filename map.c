@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:13:55 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/30 14:21:18 by adouay           ###   ########.fr       */
+/*   Updated: 2022/08/30 18:08:51 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	parse_map(t_data *data, char *file)
 	int		fd;
 
 	map_1d = NULL;
+	data->map.file_exist = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (1);
@@ -58,7 +59,7 @@ int	parse_map(t_data *data, char *file)
 	data->map.map = ft_split(map_1d, '\n');
 	free(map_1d);
 	if (!data->map.map)
-		exit(0);
+		exit(ft_printf("Error\nFile is empty\n"));
 	data->map.line_len = ft_strlen(data->map.map[0]);
 	close(fd);
 	return (0);
@@ -112,7 +113,7 @@ int	surrounded_by_wall(char **map, int line_len, int line_nbr)
 int	check_map(t_data *data, char **argv)
 {
 	if (parse_map(data, argv[1]))
-		return (1);
+		return (ft_printf("Error\nFile doesn't exist/open\n"));
 	if (map_ber(argv[1]))
 		return (ft_printf("Error\nNeed extension .ber for map\n"));
 	if (rectangular_map(data->map.map, data->map.line_len, data))
