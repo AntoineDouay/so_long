@@ -6,7 +6,7 @@
 /*   By: adouay <adouay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 03:40:27 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/30 18:12:46 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/20 16:35:11 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	render_step(t_data *data)
 	char	*step;
 
 	step = ft_itoa(data->step);
-	ft_printf("step : %s\n", step);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 30, 35, 0xFFFFFF, "score :");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 35, 0xFFFFFF, step);
 	free(step);

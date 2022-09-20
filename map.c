@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:13:55 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/30 18:08:51 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/20 16:51:47 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	check_map(t_data *data, char **argv)
 	if (surrounded_by_wall(data->map.map,
 			data->map.line_len, data->map.line_nbr))
 		return (ft_printf("Error\nNeed map surrounded by wall\n"));
-	if (check_carac(data->map.map))
+	if (check_carac(data, data->map.map))
 	{
 		return (ft_printf
 			("Error\nNeed only one player/exit and at least one coin\n"));

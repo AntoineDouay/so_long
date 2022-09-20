@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:42:01 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/30 12:58:38 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/20 19:10:34 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data{
 	void	*mlx_ptr;
 	void	*win_ptr;
 	int		step;
+	int		coin_nbr;
 	int		isaac_up;
 	int		isaac_down;
 	int		isaac_left;
@@ -58,6 +59,7 @@ typedef struct s_data{
 	t_map	map;
 }	t_data;
 /* -----main.c----- */
+void	set_var_null(t_data *data);
 void	set_var(t_data *data);
 void	coe(t_data *data, char c);
 int		handle_key_input(int key, t_data *data);
@@ -74,7 +76,10 @@ void	get_player_pos(t_data *data);
 int		map_ber(char *file);
 int		valid_carac_map(t_data *data, char **map);
 int		valid(int p, int c, int e);
-int		check_carac(char **map);
+int		check_carac(t_data *data, char **map);
+
+/* -----path.c----- */
+void	check_valid_path(t_data *data);
 
 /* -----render.c----- */
 void	render_wall(t_data *data, char c, int i, int j);

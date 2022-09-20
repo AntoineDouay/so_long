@@ -6,7 +6,7 @@
 /*   By: adouay <adouay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 04:38:42 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/30 13:38:33 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:57:35 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,16 @@ int	valid(int p, int c, int e)
 	return (0);
 }
 
-int	check_carac(char **map)
+int	check_carac(t_data *data, char **map)
 {
 	int	i;
 	int	j;
 	int	p;
-	int	c;
 	int	e;
 
 	i = 0;
 	p = 0;
-	c = 0;
+	data->coin_nbr = 0;
 	e = 0;
 	while (map[i] != 0)
 	{
@@ -106,9 +105,9 @@ int	check_carac(char **map)
 			if (map[i][j] == 'P')
 				p++;
 			if (map[i][j++] == 'C')
-				c++;
+				data->coin_nbr++;
 		}
 		i++;
 	}
-	return (valid(p, c, e));
+	return (valid(p, data->coin_nbr, e));
 }

@@ -6,7 +6,7 @@
 #    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 13:33:43 by adouay            #+#    #+#              #
-#    Updated: 2022/08/30 13:32:16 by adouay           ###   ########.fr        #
+#    Updated: 2022/09/19 12:38:55 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC = gcc -Wall -Werror -Wextra
 SRC = main.c \
 		map.c \
 		map2.c \
+		path.c \
 		render.c \
 		move.c \
 		free.c \
@@ -29,6 +30,8 @@ $(NAME): $(OBJ)
 	$(MAKE) -C libft
 	$(MAKE) -C mlx_linux
 	$(CC) $(OBJ) -g -L libft/. -lft -I libft/. -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+
+bonus: $(NAME)
 
 %.o: %.c
 	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@

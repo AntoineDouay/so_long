@@ -6,7 +6,7 @@
 /*   By: adouay <adouay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 05:56:18 by adouay            #+#    #+#             */
-/*   Updated: 2022/08/30 12:41:27 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/20 19:11:32 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ void	free_double_array(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	free(tab[i]);
 	free(tab);
 }
 
 void	set_img_np(t_data *data, t_img *img, char *file)
 {
+	if (open(file, O_RDONLY) == -1)
+		no_leak_exit(data);
 	img->img = mlx_xpm_file_to_image(data->mlx_ptr,
 			file, &img->width, &img->height);
 	if (!img->img)
