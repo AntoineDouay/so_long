@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:42:01 by adouay            #+#    #+#             */
-/*   Updated: 2022/09/20 19:10:34 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:27:28 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ int		valid(int p, int c, int e);
 int		check_carac(t_data *data, char **map);
 
 /* -----path.c----- */
+int		check_result(char **map);
+int		map_is_filled(char **map);
+void	fill_this_map(char **map);
+char	**map_cpy(t_data *data);
 void	check_valid_path(t_data *data);
 
 /* -----render.c----- */

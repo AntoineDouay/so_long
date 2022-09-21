@@ -6,13 +6,13 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 14:30:19 by adouay            #+#    #+#             */
-/*   Updated: 2022/09/19 11:51:25 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:40:29 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 
-# define FT_PRINT_H
+# define FT_PRINTF_H
 
 # include <stdarg.h>
 # include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:28:37 by adouay            #+#    #+#             */
-/*   Updated: 2022/09/20 16:42:41 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:22:55 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	check_valid_path(t_data *data)
 		fill_this_map(map);
 	if (check_result(map))
 	{
+		ft_printf("Error\n");
 		ft_printf("no path\n");
 		free_double_array(data->map.map);
 		free_double_array(map);

@@ -6,13 +6,13 @@
 #    By: adouay <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 13:33:43 by adouay            #+#    #+#              #
-#    Updated: 2022/09/19 12:38:55 by adouay           ###   ########.fr        #
+#    Updated: 2022/09/21 12:38:34 by adouay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
-CC = gcc -Wall -Werror -Wextra
+CC = cc -Wall -Werror -Wextra
 
 SRC = main.c \
 		map.c \

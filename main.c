@@ -6,7 +6,7 @@
 /*   By: adouay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:34:10 by adouay            #+#    #+#             */
-/*   Updated: 2022/09/20 19:09:43 by adouay           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:17:52 by adouay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	set_var(t_data *data)
 	set_img_np(data, &data->isaac_l, "sprite/isaac_l.xpm");
 	set_img_np(data, &data->isaac_r, "sprite/isaac_r.xpm");
 	set_img_np(data, &data->enemies, "sprite/enemies.xpm");
-	no_leak_exit(data);
 	set_img_np(data, &data->bg, "sprite/background.xpm");
 	set_img_np(data, &data->wall, "sprite/wall.xpm");
 	set_img_np(data, &data->coin, "sprite/coin.xpm");
